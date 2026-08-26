@@ -1,0 +1,59 @@
+          <div className="field">
+            <label>Type</label>
+            <div className="seg" style={{ width: '100%' }}>
+              <label className="seg-opt" style={{ flex: 1, justifyContent: 'center' }}>
+                <input type="radio" name="opttype" checked={form.type === 'Call'} onChange={() => setForm((s) => ({ ...s, type: 'Call' }))} />
+                Call
+              </label>
+              <label className="seg-opt" style={{ flex: 1, justifyContent: 'center' }}>
+                <input type="radio" name="opttype" checked={form.type === 'Put'} onChange={() => setForm((s) => ({ ...s, type: 'Put' }))} />
+                Put
+              </label>
+            </div>
+          </div>
+          <div className="field">
+            <label>Strategy</label>
+            <select className="input" value={form.strategy} onChange={setField('strategy')}>
+              {STRATEGIES.map((s) => (
+                <option key={s}>{s}</option>
+              ))}
+            </select>
+          </div>
+          <div className="field">
+            <label>Contracts</label>
+            <input className="input" type="number" placeholder="1" value={form.qty} onChange={setField('qty')} />
+          </div>
+          <div className="field">
+            <label>Strike</label>
+            <input className="input" placeholder="e.g. 190" value={form.strike} onChange={setField('strike')} />
+          </div>
+          <div className="field">
+            <label>Expiry</label>
+            <input className="input" type="date" value={form.expiry} onChange={setField('expiry')} />
+          </div>
+          <div className="field">
+            <label>Premium (per contract)</label>
+            <input className="input" placeholder="e.g. 1.85" value={form.premium} onChange={setField('premium')} />
+          </div>
+          <div className="field">
+            <label>Status</label>
+            <div className="seg" style={{ width: '100%' }}>
+              <label className="seg-opt" style={{ flex: 1, justifyContent: 'center' }}>
+                <input type="radio" name="status" checked={form.status === 'Open'} onChange={() => setForm((s) => ({ ...s, status: 'Open' }))} />
+                Open
+              </label>
+              <label className="seg-opt" style={{ flex: 1, justifyContent: 'center' }}>
+                <input type="radio" name="status" checked={form.status === 'Closed'} onChange={() => setForm((s) => ({ ...s, status: 'Closed' }))} />
+                Closed
+              </label>
+            </div>
+          </div>
+          <div className="field">
+            <label>Realized P&amp;L (optional)</label>
+            <input className="input" placeholder="e.g. 240" value={form.pnl} onChange={setField('pnl')} />
+          </div>
+        </div>
+        <div className="field">
+          <label>Notes / rationale</label>
+          <textarea className="input" placeholder="Why this trade, what are you watching" value={form.notes} onChange={setField('notes')} />
+        </div>

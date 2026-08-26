@@ -1,22 +1,67 @@
 import { useState } from 'react'
+import { Navigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 
 export default function Login() {
-  const { signInWithMagicLink, signInWithGoogle } = useAuth()
+  const { user, loading, signInWithMagicLink, verifyEmailOtp } = useAuth()
   const [email, setEmail] = useState('')
   const [sent, setSent] = useState(false)
+  const [otpCode, setOtpCode] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [info, setInfo] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError(null)
+    setInfo(null)
     setSubmitting(true)
     const { error } = await signInWithMagicLink(email)
     setSubmitting(false)
-    if (error) setError(error.message)
-    else setSent(true)
+    if (error) {
+      setError(error.message)
+      return
+    }
+    setSent(true)
+    setInfo('Code sent. Enter the OTP from your email, or use the magic link.')
   }
+
+  async function handleVerifyOtp(e: React.FormEvent) {
+    e.preventDefault()
+    setError(null)
+    setInfo(null)
+    const code = otpCode.replace(/\s+/g, '')
+    if (!/^\d{6}$/.test(code)) {
+      setError('Enter the 6-digit code from your email.')
+      return
+    }
+
+    setSubmitting(true)
+    const { error } = await verifyEmailOtp(email, code)
+    setSubmitting(false)
+    if (error) {
+      setError(error.message)
+      return
+    }
+    setInfo('Code verified. You are now signed in.')
+  }
+
+  async function resendCode() {
+    if (!email) return
+    setError(null)
+    setInfo(null)
+    setSubmitting(true)
+    const { error } = await signInWithMagicLink(email)
+    setSubmitting(false)
+    if (error) {
+      setError(error.message)
+      return
+    }
+    setInfo('A new code has been sent.')
+  }
+
+  if (loading) return null
+  if (user) return <Navigate to="/" replace />
 
   return (
     <div
@@ -38,9 +83,7 @@ export default function Login() {
           <span style={{ fontFamily: 'var(--font-heading)', fontSize: 18 }}>Options Tracker</span>
         </div>
 
-        {sent ? (
-          <p>Check your email for a sign-in link.</p>
-        ) : (
+        {!sent ? (
           <form onSubmit={handleSubmit}>
             <div className="field">
               <label>Email</label>
@@ -53,20 +96,61 @@ export default function Login() {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            {error && (
-              <p style={{ color: 'var(--color-neutral-500)', fontSize: 13, marginTop: 'var(--space-2)' }}>{error}</p>
-            )}
             <button className="btn btn-primary btn-block" type="submit" disabled={submitting}>
-              Send magic link
+              Continue with email
+            </button>
+          </form>
+        ) : (
+          <form onSubmit={handleVerifyOtp}>
+            <p style={{ fontSize: 14, marginTop: 0, marginBottom: 'var(--space-3)' }}>
+              Enter the 6-digit code sent to <strong>{email}</strong>.
+            </p>
+            <div className="field">
+              <label>One-time code</label>
+              <input
+                className="input"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                maxLength={6}
+                placeholder="123456"
+                value={otpCode}
+                onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, ''))}
+              />
+            </div>
+            <button className="btn btn-primary btn-block" type="submit" disabled={submitting}>
+              Verify code
+            </button>
+            <button className="btn btn-secondary btn-block" type="button" onClick={resendCode} disabled={submitting}>
+              Resend code
+            </button>
+            <button
+              className="btn btn-ghost btn-block"
+              type="button"
+              onClick={() => {
+                setSent(false)
+                setOtpCode('')
+                setInfo(null)
+                setError(null)
+              }}
+              disabled={submitting}
+            >
+              Use a different email
             </button>
           </form>
         )}
 
-        <div className="hr" />
+        {info && (
+          <p style={{ color: 'var(--color-accent-300)', fontSize: 13, marginTop: 'var(--space-2)' }}>{info}</p>
+        )}
+        {error && (
+          <p style={{ color: 'var(--color-neutral-500)', fontSize: 13, marginTop: 'var(--space-2)' }}>{error}</p>
+        )}
 
-        <button className="btn btn-secondary btn-block" onClick={() => signInWithGoogle()}>
-          Continue with Google
-        </button>
+        <div className="hr" />
+        <p style={{ fontSize: 13, color: 'var(--color-neutral-500)', marginTop: 'var(--space-4)' }}>
+          This is a personal project and not affiliated with any broker. Your email is only used for authentication and
+          is not shared with anyone.
+        </p>
       </div>
     </div>
   )

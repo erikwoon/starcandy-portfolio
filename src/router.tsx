@@ -4,7 +4,6 @@ import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import Trades from './pages/Trades'
 import Journal from './pages/Journal'
-import Chart from './pages/Chart'
 import RequireAuth from './components/RequireAuth'
 
 export const router = createBrowserRouter([
@@ -20,7 +19,6 @@ export const router = createBrowserRouter([
       { index: true, element: <Dashboard /> },
       { path: 'trades', element: <Trades /> },
       { path: 'journal', element: <Journal /> },
-      { path: 'chart', element: <Chart /> },
     ],
   },
   { path: '*', element: <Navigate to="/" replace /> },

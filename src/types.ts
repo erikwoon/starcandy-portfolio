@@ -28,6 +28,8 @@ export interface Trade {
   pnl: number | null
   notes: string | null
   screenshot_url: string | null
+  order_time: string | null
+  fill_time: string | null
   created_at: string
 }
 
@@ -47,4 +49,15 @@ export interface JournalEntry {
 export type NewJournalEntry = {
   trade_id: string
   note: string
+}
+
+export interface UserSettings {
+  user_id: string
+  starting_balance: number
+  created_at: string
+  updated_at: string
+}
+
+export type UserSettingsPatch = {
+  starting_balance: number
 }

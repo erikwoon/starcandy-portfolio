@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useAddJournalEntry } from '../hooks/useJournal'
 import { useTrades } from '../hooks/useTrades'
+import { formatDate } from '../lib/format'
 
 interface JournalDialogProps {
   open: boolean
@@ -46,7 +47,7 @@ export default function JournalDialog({ open, onClose }: JournalDialogProps) {
           <select className="input" value={tradeId} onChange={(e) => setTradeId(e.target.value)}>
             {trades.map((t) => (
               <option key={t.id} value={t.id}>
-                {t.ticker}
+                {t.ticker} {t.type} ${t.strike} · {formatDate(t.fill_time ?? t.order_time ?? t.created_at)}
               </option>
             ))}
           </select>

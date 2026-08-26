@@ -25,15 +25,16 @@ export function useAuth() {
       options: { emailRedirectTo: window.location.origin },
     })
 
-  const signInWithGoogle = () =>
-    supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: { redirectTo: window.location.origin },
+  const verifyEmailOtp = (email: string, code: string) =>
+    supabase.auth.verifyOtp({
+      email,
+      token: code,
+      type: 'email',
     })
 
   const signOut = () => supabase.auth.signOut()
 
   const user: User | null = session?.user ?? null
 
-  return { session, user, loading, signInWithMagicLink, signInWithGoogle, signOut }
+  return { session, user, loading, signInWithMagicLink, verifyEmailOtp, signOut }
 }

@@ -1,15 +1,38 @@
+import { useEffect, useMemo, useState } from 'react'
 import { useTrades } from '../hooks/useTrades'
 import { useJournal } from '../hooks/useJournal'
-import { deriveStats, toTradeRow } from '../lib/format'
+import { deriveStats, formatCurrency, toTradeRow } from '../lib/format'
+import { useUpsertUserSettings, useUserSettings } from '../hooks/useUserSettings'
+
+function parseMoneyInput(raw: string): number {
+  return Number((raw || '').replace(/,/g, ''))
+}
 
 export default function Dashboard() {
   const { data: trades = [], isLoading: tradesLoading, error: tradesError } = useTrades()
   const { data: journalEntries = [], isLoading: journalLoading } = useJournal()
+  const { data: settings, isLoading: settingsLoading, error: settingsError } = useUserSettings()
+  const upsertSettings = useUpsertUserSettings()
+  const [startingBalanceInput, setStartingBalanceInput] = useState('0')
 
   const stats = deriveStats(trades)
   const rows = trades.map(toTradeRow)
   const recentTrades = rows.slice(0, 6)
   const recentJournal = journalEntries.slice(0, 3)
+  const startingBalance = settings?.starting_balance ?? 0
+
+  useEffect(() => {
+    setStartingBalanceInput(String(Math.round(startingBalance * 100) / 100))
+  }, [startingBalance])
+
+  const parsedStartingBalance = useMemo(() => parseMoneyInput(startingBalanceInput), [startingBalanceInput])
+  const accountValue = startingBalance + stats.totalPnl
+  const hasUnsavedStartingBalance = Number.isFinite(parsedStartingBalance) && Math.abs(parsedStartingBalance - startingBalance) > 0.0001
+
+  async function saveStartingBalance() {
+    if (!Number.isFinite(parsedStartingBalance)) return
+    await upsertSettings.mutateAsync({ starting_balance: parsedStartingBalance })
+  }
 
   return (
     <div style={{ padding: 'var(--space-8)', maxWidth: 1240, margin: '0 auto' }}>
@@ -22,14 +45,43 @@ export default function Dashboard() {
       </div>
 
       {tradesError && <p style={{ color: 'var(--color-neutral-500)' }}>Failed to load trades.</p>}
+      {settingsError && <p style={{ color: 'var(--color-neutral-500)' }}>Failed to load your starting balance.</p>}
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 'var(--space-4)', marginBottom: 'var(--space-6)' }}>
+        <div className="card elev-sm">
+          <span className="card-kicker">Starting balance</span>
+          <div style={{ display: 'flex', gap: 'var(--space-2)', alignItems: 'center' }}>
+            <input
+              className="input"
+              inputMode="decimal"
+              value={startingBalanceInput}
+              onChange={(e) => setStartingBalanceInput(e.target.value.replace(/[^0-9.-]/g, ''))}
+              placeholder="0"
+              aria-label="Starting balance"
+            />
+            <button
+              className="btn btn-secondary"
+              onClick={() => void saveStartingBalance()}
+              disabled={!hasUnsavedStartingBalance || upsertSettings.isPending || settingsLoading}
+            >
+              Save
+            </button>
+          </div>
+          <span className="card-meta">Set your starting account value</span>
+        </div>
         <div className="card elev-sm">
           <span className="card-kicker">Total P&amp;L</span>
           <div className="card-title" style={{ fontSize: 26, color: stats.pnlColorValue }}>
             {tradesLoading ? '—' : stats.totalPnlLabel}
           </div>
           <span className="card-meta">All time, {stats.tradeCount} trades</span>
+        </div>
+        <div className="card elev-sm">
+          <span className="card-kicker">Current balance</span>
+          <div className="card-title" style={{ fontSize: 26, color: stats.pnlColorValue }}>
+            {tradesLoading || settingsLoading ? '—' : formatCurrency(accountValue)}
+          </div>
+          <span className="card-meta">Starting balance + total P&amp;L</span>
         </div>
         <div className="card elev-sm">
           <span className="card-kicker">Win rate</span>
@@ -40,11 +92,6 @@ export default function Dashboard() {
           <span className="card-kicker">Open positions</span>
           <div className="card-title" style={{ fontSize: 26 }}>{tradesLoading ? '—' : stats.openCount}</div>
           <span className="card-meta">{stats.openPremiumLabel} premium at risk</span>
-        </div>
-        <div className="card elev-sm">
-          <span className="card-kicker">Premium collected</span>
-          <div className="card-title" style={{ fontSize: 26 }}>{tradesLoading ? '—' : stats.totalPremiumLabel}</div>
-          <span className="card-meta">Net of debits paid</span>
         </div>
       </div>
 

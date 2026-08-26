@@ -98,6 +98,8 @@ export default function TradeDialog({ open, onClose }: TradeDialogProps) {
       pnl: form.status === 'Closed' ? 0 : null,
       notes: form.notes || null,
       screenshot_url: screenshotUrl,
+      order_time: null,
+      fill_time: null,
     }
     try {
       await addTrade.mutateAsync(trade)
