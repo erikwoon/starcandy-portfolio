@@ -157,6 +157,13 @@ ENV/
 env.bak/
 venv.bak/
 
+# Node / Vite
+node_modules/
+dist/
+dist-ssr/
+*.local
+.vite/
+
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -216,3 +223,12 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Claude AI
+#   Claude AI specific template is maintained in a separate ClaudeAI.gitignore that can be found at
+./claude
+.superpowers/
+
+# Node.js modules
+node_modules/
+.
