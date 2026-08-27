@@ -1,0 +1,369 @@
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Architects+Daughter&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg: #121315;
+  --paper: #eef4f2;
+  --paper-dim: #8a8d91;
+  --amber: #ffb238;
+  --amber-dim: rgba(255, 178, 56, 0.14);
+  --line: rgba(238, 244, 242, 0.14);
+
+  --font-display: 'Big Shoulders Display', 'Arial Narrow', sans-serif;
+  --font-hand: 'Architects Daughter', cursive;
+  --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--paper);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.frame {
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 4.5rem 2.5rem 5rem;
+}
+
+/* Signature element: drafting-frame corner ticks, echoing the crop marks
+   on a printed technical drawing sheet. */
+.corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid var(--amber);
+  opacity: 0;
+  animation: draw-in 0.5s ease-out 0.15s forwards;
+}
+
+.corner--tl {
+  top: 1.75rem;
+  left: 0.75rem;
+  border-right: none;
+  border-bottom: none;
+}
+
+.corner--tr {
+  top: 1.75rem;
+  right: 0.75rem;
+  border-left: none;
+  border-bottom: none;
+}
+
+.corner--bl {
+  bottom: 1.75rem;
+  left: 0.75rem;
+  border-right: none;
+  border-top: none;
+}
+
+.corner--br {
+  bottom: 1.75rem;
+  right: 0.75rem;
+  border-left: none;
+  border-top: none;
+}
+
+/* Title block: the identifying strip every real drawing sheet carries. */
+.titleblock {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.85rem;
+  margin-bottom: 2.75rem;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--paper-dim);
+  opacity: 0;
+  animation: fade-up 0.5s ease-out 0.3s forwards;
+}
+
+.hero {
+  margin-bottom: 2.5rem;
+  opacity: 0;
+  animation: fade-up 0.6s ease-out 0.45s forwards;
+}
+
+.name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: clamp(3rem, 11vw, 5.25rem);
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+  color: var(--paper);
+}
+
+.tagline {
+  margin: 0.6rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--amber);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.panel {
+  margin-bottom: 2.75rem;
+}
+
+.meta {
+  margin: 0 0 1.75rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.meta__row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 1rem;
+  padding: 0.4rem 0;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.meta__row dt {
+  color: var(--paper-dim);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.meta__row dd {
+  margin: 0;
+  color: var(--paper);
+}
+
+/* The one un-drafted mark on the sheet: a hand note in the margin. */
+.note {
+  font-family: var(--font-hand);
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: var(--paper);
+  max-width: 58ch;
+  transform: rotate(-0.4deg);
+}
+
+.section {
+  margin-bottom: 2.75rem;
+}
+
+.section__label {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin: 0 0 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--paper);
+}
+
+.section__num {
+  color: var(--amber);
+}
+
+.section__num::before {
+  content: 'SHEET ';
+}
+
+.ledger,
+.case {
+  border-top: 1px solid var(--line);
+}
+
+.ledger__row,
+.case__row {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 1rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.95rem;
+}
+
+.ledger__key,
+.case__key {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--paper-dim);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding-top: 0.1rem;
+}
+
+.ledger__value,
+.case__value {
+  color: var(--paper);
+}
+
+.case__value--status {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  background: var(--amber-dim);
+  color: var(--amber);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  border-radius: 2px;
+  width: fit-content;
+}
+
+.role-entry {
+  border-top: 1px solid var(--line);
+  padding-top: 1rem;
+}
+
+.role__header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-bottom: 0.85rem;
+}
+
+.role__title {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--paper);
+}
+
+.role__meta {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--paper-dim);
+}
+
+.role__bullets {
+  margin: 0;
+  padding-left: 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.role__bullets li {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--paper);
+}
+
+.role__bullets li::marker {
+  color: var(--amber);
+}
+
+.case + .case {
+  margin-top: 1.25rem;
+}
+
+.links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.links li {
+  border-bottom: 1px solid var(--line);
+}
+
+.links a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 0;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--paper);
+  text-decoration: none;
+  transition: color 0.15s ease, padding-left 0.15s ease;
+}
+
+.links a::after {
+  content: '\2192';
+  color: var(--amber);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.links a:hover,
+.links a:focus-visible {
+  color: var(--amber);
+  padding-left: 0.35rem;
+}
+
+.links a:hover::after,
+.links a:focus-visible::after {
+  opacity: 1;
+}
+
+.links a:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+@keyframes draw-in {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 520px) {
+  .frame {
+    padding: 3.5rem 1.5rem 4rem;
+  }
+
+  .titleblock {
+    font-size: 0.62rem;
+  }
+
+  .meta__row,
+  .ledger__row,
+  .case__row {
+    grid-template-columns: 92px 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .corner {
+    opacity: 0.7;
+  }
+
+  .titleblock,
+  .hero {
+    opacity: 1;
+  }
+}
