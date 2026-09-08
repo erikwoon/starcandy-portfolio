@@ -17,6 +17,10 @@ import path from 'node:path';
 const ROOT = path.resolve(import.meta.dirname, '..');
 const PHOTOS_DIR = path.join(ROOT, 'public', 'photos');
 const BUCKET_NAME = 'starcandy-photos'; // must match wrangler.jsonc
+// npx resolves to npx.cmd on Windows — spawnSync (which execFileSync uses)
+// won't find it without a shell, and `.cmd` needs the exe named explicitly
+// rather than shell:true (which skips arg-escaping).
+const NPX = process.platform === 'win32' ? 'npx.cmd' : 'npx';
 
 async function main() {
   const subdirs = ['thumb', 'full'];
@@ -31,7 +35,7 @@ async function main() {
 
       console.log(`uploading ${key}...`);
       execFileSync(
-        'npx',
+        NPX,
         [
           'wrangler',
           'r2',
