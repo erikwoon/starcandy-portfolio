@@ -208,7 +208,7 @@ function App() {
             </p>
             <a
               className="pill entry__pill"
-              href="/research-paper.pdf"
+              href="/research_paper.pdf"
               target="_blank"
               rel="noreferrer"
             >

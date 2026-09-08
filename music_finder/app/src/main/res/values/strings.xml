@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">MusicFinder</string>
+    <string name="action_register">New to Music Finder? Register here.</string>
+    <string name="prompt_signIn">Sign in</string>
+    <string name="prompt_email">Enter your email:</string>
+    <string name="prompt_password">Enter your password:</string>
+    <string name="prompt_confirm_password">Re-enter your password:</string>
+    <string name="prompt_register">Register</string>
+    <string name="action_signIn">Already a member? Sign in here instead.</string>
+    <string name="prompt_signOut">Sign out</string>
+    <string name="prompt_search">Search for music</string>
+    <string name="prompt_preference">Preference Setting</string>
+    <string name="action_back">Back</string>
+    <string name="action_play">Play button</string>
+</resources>
