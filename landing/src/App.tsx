@@ -15,27 +15,28 @@ function App() {
   return (
     <main className="frame">
       <header className="intro">
-        <img
-          className="portrait"
-          src="/profilephoto.jpeg"
-          alt="Portrait of Erik Woon"
-          width="112"
-          height="112"
-        />
+        <div className="intro__top">
+          <img
+            className="portrait"
+            src="/profilephoto.jpeg"
+            width="150"
+            height="150"
+          />
 
-        <div className="terminal" aria-hidden="true">
-          <p className="terminal__line">
-            <span className="terminal__prompt">$</span> whoami
-          </p>
-          <p className="terminal__line terminal__line--out">
-            erik-woon — security-minded engineer
-          </p>
-          <p className="terminal__line">
-            <span className="terminal__prompt">$</span> status
-          </p>
-          <p className="terminal__line terminal__line--out">
-            open to full-time roles<span className="terminal__cursor" />
-          </p>
+          <div className="terminal" aria-hidden="true">
+            <p className="terminal__line">
+              <span className="terminal__prompt">$</span> whoami
+            </p>
+            <p className="terminal__line terminal__line--out">
+              erik-woon, aspiring software and cybersecurity engineer
+            </p>
+            <p className="terminal__line">
+              <span className="terminal__prompt">$</span> status
+            </p>
+            <p className="terminal__line terminal__line--out">
+              open to full-time roles<span className="terminal__cursor" />
+            </p>
+          </div>
         </div>
 
         <p className="bio">
@@ -105,6 +106,7 @@ function App() {
               claims and 2FA, cutting endpoint latency from 340ms to 180ms;
               set least-privilege AWS IAM policies and hardened Docker
               deployments through network isolation and minimal base images.
+
             </p>
           </article>
 
@@ -119,10 +121,31 @@ function App() {
               </div>
             </div>
             <p className="entry__desc">
-              MSc Cyber Security, following a BSc in Computer Science from
-              Monash University.
+              MSc in Cyber Security. Coursework spanned offensive security (network security, penetration testing, reconnaissance-to-exploitation workflows),
+              and defensive practice (incident response, from detection through containment to post-incident analysis). 
+              It also covered GRC, mapping technical controls to regulatory and organisational risk frameworks to connect security work with business impact.
             </p>
           </article>
+
+          <article className="entry">
+            <div className="entry__header">
+              <span className="badge badge--teal" aria-hidden="true">
+                RM
+              </span>
+              <div className="entry__heading">
+                <span className="entry__title">Monash University</span>
+                <span className="entry__meta">2021 – 2024</span>
+              </div>
+            </div>
+            <p className="entry__desc">
+              BSc in Computer Science, majoring in Advanced Computer Science. Minor in Banking and Finance. Coursework began with programming fundamentals, computer systems, networks and security, 
+              and the theoretical underpinnings of computing and algorithms, then progressed into object-oriented design, database systems and the theory of computation.
+              The algorithms and software specialisation built on this with advanced data structures and algorithms, programming paradigms and parallel computing, 
+              focused on designing efficient solutions and reasoning about performance and correctness across different programming models.
+
+            </p>
+          </article>
+          
         </section>
       )}
 

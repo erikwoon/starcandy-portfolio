@@ -40,13 +40,20 @@ body {
   animation: fade-up 0.5s ease-out 0.1s forwards;
 }
 
+.intro__top {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.75rem;
+}
+
 .portrait {
   display: block;
-  width: 95px;
-  height: 95px;
+  flex: none;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   object-fit: cover;
-  margin-bottom: 1.5rem;
 }
 
 /* Signature element: a small terminal readout, standing in for the usual
@@ -55,7 +62,6 @@ body {
   display: inline-flex;
   flex-direction: column;
   gap: 0.15rem;
-  margin-bottom: 1.75rem;
   padding: 0.85rem 1rem;
   border: 1px solid var(--line);
   border-radius: 6px;
@@ -333,6 +339,11 @@ body {
 @media (max-width: 480px) {
   .frame {
     padding: 4rem 1.25rem 4.5rem;
+  }
+
+  .intro__top {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .entry__header {
