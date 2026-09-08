@@ -26,25 +26,52 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.frame {
+.layout {
   max-width: 640px;
   margin: 0 auto;
   padding: 5.5rem 2rem 6rem;
 }
 
-/* ---- Intro ---- */
+/* Above ~900px there's room to stop stacking everything in one narrow
+   column: the profile becomes a sticky sidebar next to the scrolling
+   content, so the page actually uses the width instead of floating a
+   phone-width column in the middle of the screen. */
+@media (min-width: 900px) {
+  .layout {
+    max-width: 1040px;
+    display: grid;
+    grid-template-columns: 300px minmax(0, 1fr);
+    gap: 4.5rem;
+    align-items: start;
+  }
+}
 
-.intro {
-  margin-bottom: 3rem;
+/* ---- Sidebar ---- */
+
+.sidebar {
   opacity: 0;
   animation: fade-up 0.5s ease-out 0.1s forwards;
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 900px) {
+  .sidebar {
+    position: sticky;
+    top: 5.5rem;
+    margin-bottom: 0;
+  }
 }
 
 .intro__top {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 1.5rem;
   margin-bottom: 1.75rem;
+}
+
+.content {
+  min-width: 0;
 }
 
 .portrait {
@@ -106,6 +133,38 @@ body {
 .bio strong {
   color: var(--text);
   font-weight: 600;
+}
+
+/* Directory-listing riff on the terminal box — a lower-stakes, ls-style
+   way to show a few real interests without turning them into prose. */
+.dirlist {
+  margin-top: 0.85rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--line);
+}
+
+.dirlist .terminal__line {
+  margin-bottom: 0.6rem;
+}
+
+.dirlist__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
+.dirlist__item {
+  color: var(--text);
+}
+
+.dirlist__slash {
+  color: var(--accent);
+}
+
+.dirlist__sub {
+  color: var(--text-dim);
 }
 
 .inline-link {
@@ -284,6 +343,114 @@ body {
   color: var(--accent);
 }
 
+/* ---- Photos ---- */
+
+/* Masonry via CSS multi-column rather than grid: a grid row's height is
+   set by its tallest cell, which leaves empty space under shorter
+   neighbours whenever a portrait shot sits next to landscape ones.
+   Columns instead pack each item into whichever column has room next,
+   so mixed orientations tile with no gaps. */
+.gallery {
+  column-count: 3;
+  column-gap: 0.6rem;
+}
+
+.gallery__item {
+  display: block;
+  width: 100%;
+  margin-bottom: 0.6rem;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  overflow: hidden;
+  background: rgba(236, 237, 238, 0.04);
+  cursor: pointer;
+  break-inside: avoid;
+}
+
+.gallery__item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.gallery__item:hover img,
+.gallery__item:focus-visible img {
+  transform: scale(1.03);
+  opacity: 0.9;
+}
+
+.gallery__item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4vh 4vw;
+  background: rgba(10, 11, 12, 0.92);
+  animation: fade-up 0.15s ease-out forwards;
+}
+
+.lightbox__close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.5rem;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: rgba(236, 237, 238, 0.06);
+  color: var(--text);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.lightbox__close:hover,
+.lightbox__close:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.lightbox__figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.lightbox__img {
+  display: block;
+  max-width: 100%;
+  max-height: 82vh;
+  width: auto;
+  height: auto;
+  border-radius: 4px;
+}
+
+.lightbox__exif {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .gallery {
+    column-count: 2;
+  }
+}
+
 /* ---- Contact ---- */
 
 .contact-links {
@@ -337,7 +504,7 @@ body {
 }
 
 @media (max-width: 480px) {
-  .frame {
+  .layout {
     padding: 4rem 1.25rem 4.5rem;
   }
 
@@ -361,7 +528,7 @@ body {
     transition: none !important;
   }
 
-  .intro,
+  .sidebar,
   .panel {
     opacity: 1;
   }

@@ -12,6 +12,13 @@ dist
 dist-ssr
 *.local
 
+# Full-res camera originals and their resized/uploaded output — these
+# live in R2, not the repo or the deployed static-assets bundle. See
+# scripts/build-gallery.mjs and scripts/upload-gallery.mjs.
+/gallery_src
+/public/photos
+.wrangler
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -1,7 +1,21 @@
 {
-  "name": "starcandy-portfolio",
-  "compatibility_date": "2026-09-08",
-  "assets": {
-    "directory": "./dist"
-  }
+	"name": "starcandy-portfolio",
+	"compatibility_date": "2026-09-08",
+	"main": "worker/index.ts",
+	"assets": {
+		"directory": "./dist",
+		// Only /photos/* is routed to the Worker (to serve from R2); every
+		// other request — the built site, profile photo, PDF — is served
+		// directly by the static-assets layer without invoking the Worker.
+		"run_worker_first": [
+			"/photos/*"
+		]
+	},
+	"r2_buckets": [
+		{
+			"binding": "PHOTOS_BUCKET",
+			"bucket_name": "starcandy-photos",
+      "remote": true
+		}
+	]
 }

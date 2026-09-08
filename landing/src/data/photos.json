@@ -1,0 +1,162 @@
+[
+  {
+    "id": "dscf2610",
+    "thumb": "/photos/thumb/dscf2610.webp",
+    "full": "/photos/full/dscf2610.webp",
+    "width": 7728,
+    "height": 5152,
+    "exif": {
+      "camera": "X-T5",
+      "lens": "XF18-55mmF2.8-4 R LM OIS",
+      "aperture": "f/5.6",
+      "shutter": "1/450s",
+      "iso": "ISO 250",
+      "focalLength": "18mm",
+      "date": "2026-01-25"
+    }
+  },
+  {
+    "id": "dscf2368",
+    "thumb": "/photos/thumb/dscf2368.webp",
+    "full": "/photos/full/dscf2368.webp",
+    "width": 5152,
+    "height": 7728,
+    "exif": {
+      "camera": "X-T5",
+      "lens": "XF18-55mmF2.8-4 R LM OIS",
+      "aperture": "f/4",
+      "shutter": "1/9s",
+      "iso": "ISO 800",
+      "focalLength": "55mm",
+      "date": "2026-01-21"
+    }
+  },
+  {
+    "id": "dscf2198",
+    "thumb": "/photos/thumb/dscf2198.webp",
+    "full": "/photos/full/dscf2198.webp",
+    "width": 5152,
+    "height": 7728,
+    "exif": {
+      "camera": "X-T5",
+      "lens": "XF18-55mmF2.8-4 R LM OIS",
+      "aperture": "f/4.5",
+      "shutter": "1/600s",
+      "iso": "ISO 125",
+      "focalLength": "55mm",
+      "date": "2026-01-18"
+    }
+  },
+  {
+    "id": "dscf2214",
+    "thumb": "/photos/thumb/dscf2214.webp",
+    "full": "/photos/full/dscf2214.webp",
+    "width": 7728,
+    "height": 5152,
+    "exif": {
+      "camera": "X-T5",
+      "lens": "XF18-55mmF2.8-4 R LM OIS",
+      "aperture": "f/3.6",
+      "shutter": "1/640s",
+      "iso": "ISO 125",
+      "focalLength": "28mm",
+      "date": "2026-01-18"
+    }
+  },
+  {
+    "id": "dscf2181",
+    "thumb": "/photos/thumb/dscf2181.webp",
+    "full": "/photos/full/dscf2181.webp",
+    "width": 7728,
+    "height": 5152,
+    "exif": {
+      "camera": "X-T5",
+      "lens": "XF18-55mmF2.8-4 R LM OIS",
+      "aperture": "f/3.6",
+      "shutter": "1/750s",
+      "iso": "ISO 125",
+      "focalLength": "18mm",
+      "date": "2026-01-17"
+    }
+  },
+  {
+    "id": "dscf2042",
+    "thumb": "/photos/thumb/dscf2042.webp",
+    "full": "/photos/full/dscf2042.webp",
+    "width": 7728,
+    "height": 5152,
+    "exif": {
+      "camera": "X-T5",
+      "lens": "XF18-55mmF2.8-4 R LM OIS",
+      "aperture": "f/16",
+      "shutter": "1/1000s",
+      "iso": "ISO 320",
+      "focalLength": "30mm",
+      "date": "2026-01-16"
+    }
+  },
+  {
+    "id": "dscf2148",
+    "thumb": "/photos/thumb/dscf2148.webp",
+    "full": "/photos/full/dscf2148.webp",
+    "width": 7728,
+    "height": 5152,
+    "exif": {
+      "camera": "X-T5",
+      "lens": "XF18-55mmF2.8-4 R LM OIS",
+      "aperture": "f/5.6",
+      "shutter": "1/450s",
+      "iso": "ISO 6400",
+      "focalLength": "23mm",
+      "date": "2026-01-16"
+    }
+  },
+  {
+    "id": "dscf1992",
+    "thumb": "/photos/thumb/dscf1992.webp",
+    "full": "/photos/full/dscf1992.webp",
+    "width": 7728,
+    "height": 5152,
+    "exif": {
+      "camera": "X-T5",
+      "lens": "XF18-55mmF2.8-4 R LM OIS",
+      "aperture": "f/11",
+      "shutter": "1/680s",
+      "iso": "ISO 125",
+      "focalLength": "48mm",
+      "date": "2026-01-15"
+    }
+  },
+  {
+    "id": "img-0144",
+    "thumb": "/photos/thumb/img-0144.webp",
+    "full": "/photos/full/img-0144.webp",
+    "width": 7728,
+    "height": 5152,
+    "exif": {
+      "camera": "X-T5",
+      "lens": "XF18-55mmF2.8-4 R LM OIS",
+      "aperture": "f/13",
+      "shutter": "1/42s",
+      "iso": "ISO 6400",
+      "focalLength": "55mm",
+      "date": "2026-01-15"
+    }
+  },
+  {
+    "id": "img-0136",
+    "thumb": "/photos/thumb/img-0136.webp",
+    "full": "/photos/full/img-0136.webp",
+    "width": 5152,
+    "height": 7728,
+    "exif": {
+      "camera": "X-T5",
+      "lens": "XF18-55mmF2.8-4 R LM OIS",
+      "aperture": "f/4",
+      "shutter": "1/42s",
+      "iso": "ISO 160",
+      "focalLength": "36mm",
+      "date": "2026-01-14"
+    }
+  }
+]
