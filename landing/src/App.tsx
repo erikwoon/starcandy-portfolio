@@ -1,6 +1,44 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import photos from './data/photos.json';
+
+/**
+ * Reveals `.reveal` elements inside the returned ref as they scroll into
+ * view, by toggling `is-visible` (see .reveal in App.css). Re-scans on
+ * every render so it also picks up elements that appear after a tab
+ * switch; already-visible elements are left alone so nothing re-animates.
+ */
+function useReveal<T extends HTMLElement>() {
+  const ref = useRef<T>(null);
+
+  useEffect(() => {
+    const root = ref.current;
+    if (!root) return;
+
+    const els = Array.from(root.querySelectorAll<HTMLElement>('.reveal'));
+    els.forEach((el, i) => el.style.setProperty('--reveal-index', String(i)));
+
+    const toObserve = els.filter((el) => !el.classList.contains('is-visible'));
+    if (toObserve.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -40px 0px' },
+    );
+    toObserve.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  });
+
+  return ref;
+}
 
 type TabId = 'experience' | 'projects' | 'photos' | 'contact';
 
@@ -39,6 +77,7 @@ function App() {
   const [activeTab, setActiveTab] = useState<TabId>('experience');
   const [openPhotoId, setOpenPhotoId] = useState<string | null>(null);
   const openPhoto = photos.find((p) => p.id === openPhotoId) ?? null;
+  const contentRef = useReveal<HTMLDivElement>();
 
   useEffect(() => {
     logConsoleGreeting();
@@ -138,7 +177,7 @@ function App() {
 
       </aside>
 
-      <div className="content">
+      <div className="content" ref={contentRef}>
       <nav className="tabs" role="tablist" aria-label="Sections">
         {TABS.map((tab) => (
           <button
@@ -162,7 +201,34 @@ function App() {
           role="tabpanel"
           aria-labelledby="tab-experience"
         >
-          <article className="entry">
+          <article className="entry reveal">
+            <div className="entry__header">
+              <span className="badge badge--teal" aria-hidden="true">
+                TH
+              </span>
+              <div className="entry__heading">
+                <span className="entry__title">
+                  Security Analyst Level 1 (SAL1)
+                </span>
+                <span className="entry__meta">TryHackMe · Issued Feb 2026</span>
+              </div>
+            </div>
+            <p className="entry__desc">
+              Certified for the knowledge and practical skills required to
+              excel as a security analyst, assessed through a hands-on,
+              scenario-based exam.
+            </p>
+            <a
+              className="pill entry__pill"
+              href="https://assets.tryhackme.com/certification-certificate/69860dd151dde06deca2061f.pdf"
+              target="_blank"
+              rel="noreferrer"
+            >
+              View Certificate ↗
+            </a>
+          </article>
+
+          <article className="entry reveal">
             <div className="entry__header">
               <span className="badge badge--amber" aria-hidden="true">
                 BC
@@ -186,7 +252,7 @@ function App() {
             </p>
           </article>
 
-          <article className="entry">
+          <article className="entry reveal">
             <div className="entry__header">
               <span className="badge badge--teal" aria-hidden="true">
                 RM
@@ -203,7 +269,7 @@ function App() {
             </p>
           </article>
 
-          <article className="entry">
+          <article className="entry reveal">
             <div className="entry__header">
               <span className="badge badge--teal" aria-hidden="true">
                 RM
@@ -232,7 +298,7 @@ function App() {
           role="tabpanel"
           aria-labelledby="tab-projects"
         >
-          <article className="entry">
+          <article className="entry reveal">
             <div className="entry__header">
               <span className="badge badge--amber" aria-hidden="true">
                 OT
@@ -249,7 +315,7 @@ function App() {
             </p>
           </article>
 
-          <article className="entry">
+          <article className="entry reveal">
             <div className="entry__header">
               <span className="badge badge--teal" aria-hidden="true">
                 MF
@@ -267,7 +333,7 @@ function App() {
             </p>
           </article>
 
-          <article className="entry">
+          <article className="entry reveal">
             <div className="entry__header">
               <span className="badge badge--amber" aria-hidden="true">
                 PT
@@ -285,7 +351,7 @@ function App() {
             </p>
           </article>
 
-          <article className="entry">
+          <article className="entry reveal">
             <div className="entry__header">
               <span className="badge badge--teal" aria-hidden="true">
                 CTI
@@ -338,7 +404,7 @@ function App() {
               <button
                 key={photo.id}
                 type="button"
-                className="gallery__item"
+                className="gallery__item reveal"
                 onClick={() => setOpenPhotoId(photo.id)}
                 aria-label={`View photo${
                   photo.exif?.date ? ` from ${photo.exif.date}` : ''

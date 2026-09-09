@@ -238,6 +238,23 @@ body {
   border-top: 1px solid var(--line);
 }
 
+/* ---- Scroll reveal ----
+   Applied via the useReveal hook (IntersectionObserver): elements start
+   offset/transparent and settle into place the first time they cross into
+   the viewport, staggered slightly by DOM order. */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition-delay: calc(var(--reveal-index, 0) * 60ms);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .entry:last-of-type {
   border-bottom: 1px solid var(--line);
 }
@@ -529,8 +546,10 @@ body {
   }
 
   .sidebar,
-  .panel {
+  .panel,
+  .reveal {
     opacity: 1;
+    transform: none;
   }
 
   .terminal__cursor {
