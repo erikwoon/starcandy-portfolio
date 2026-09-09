@@ -59,6 +59,11 @@ bytes are fetched from R2 at request time by `worker/index.ts`.
 
 ## Deploy
 
+Pushes to `main` that touch `landing/**` deploy automatically via
+`.github/workflows/deploy-landing.yml` (lint, build, `wrangler deploy`).
+
+To deploy manually instead:
+
 ```
 npm run deploy
 ```
